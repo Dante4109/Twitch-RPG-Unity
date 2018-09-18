@@ -28,7 +28,7 @@ public class EnemyStateMachine : MonoBehaviour {
     public GameObject HeroToAttack;
     private float animSpeed = 5f;
 
-
+    
 
 
     // Use this for initialization
@@ -62,7 +62,6 @@ public class EnemyStateMachine : MonoBehaviour {
 
             case (TurnState.ACTION):
                 StartCoroutine(TimeForAction ());
-
                 break;
 
             case (TurnState.DEAD):
@@ -108,16 +107,22 @@ public class EnemyStateMachine : MonoBehaviour {
         //animate the enemy near the hero to attack
         Vector3 heroPostion = new Vector3 (HeroToAttack.transform.position.x-1.5f, HeroToAttack.transform.position.y, HeroToAttack.transform.position.z); 
         while (MoveTowardsEnemy(heroPostion)) { yield return null; } 
-       
+
 
         //wait abit
+        yield return new WaitForSeconds(0.5f);
         //do damage
 
-        //animate back to startposition
+        //animate back to startposition 
+        Vector3 firstPositon = startposition; 
+        while (MoveTowardsStart (firstPositon)) { yield return null; }
 
+        
         //remove this perform from the list in BSM
+        
 
         //reset BSM -> Wait
+
 
         actionStarted = false;
         //reset this enemy state
@@ -129,8 +134,17 @@ public class EnemyStateMachine : MonoBehaviour {
     {
         return target != (transform.position = Vector3.MoveTowards(transform.position, target, animSpeed * Time.deltaTime));
     }
+
+    private bool MoveTowardsStart(Vector3 target)
+    {
+        return target != (transform.position = Vector3.MoveTowards(transform.position, target, animSpeed * Time.deltaTime));
+    }
+
+    
     
 }
+
+
 
 
 
