@@ -117,11 +117,12 @@ public class EnemyStateMachine : MonoBehaviour {
         Vector3 firstPositon = startposition; 
         while (MoveTowardsStart (firstPositon)) { yield return null; }
 
-        
+
         //remove this perform from the list in BSM
-        
+        BSM.PerformList.RemoveAt(0);
 
         //reset BSM -> Wait
+        BSM.battlestates = BattleStateMachine.PerformAction.WAIT;
 
 
         actionStarted = false;
@@ -139,12 +140,7 @@ public class EnemyStateMachine : MonoBehaviour {
     {
         return target != (transform.position = Vector3.MoveTowards(transform.position, target, animSpeed * Time.deltaTime));
     }
-
-    
-    
 }
-
-
 
 
 

@@ -19,9 +19,25 @@ public class BattleStateMachine : MonoBehaviour {
     public List<GameObject> HerosInBattle = new List<GameObject>();
     public List<GameObject> EnemiesInBattle = new List<GameObject>();
     
+    public enum HeroGUI
+    {
+        ACTIVE,
+        WAITING,
+        INPUT1,
+        INPUT2,
+        DONE
+    }
+
+    public HeroGUI HeroInput;
+
+    public List<GameObject> HeroesToManage = new List<GameObject>();
+    private HandleTurn HeroChoice;
+
+    public GameObject enemyButton;
 
     
-
+    
+    
     // Use this for initialization
     void Start ()
 
@@ -74,6 +90,14 @@ public class BattleStateMachine : MonoBehaviour {
     {
         PerformList.Add(input);
         
+    }
+
+    void EnemyButtons()
+    {
+        foreach (GameObject enemy in EnemiesInBattle) 
+        {
+            GameObject newButton = Instantiate(enemyButton) as GameObject;
+        }
     }
 }
 
