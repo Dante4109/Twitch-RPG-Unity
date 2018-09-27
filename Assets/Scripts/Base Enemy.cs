@@ -14,7 +14,6 @@ public class BaseEnemy
         FIRE,
         WATER,
         ELECTRIC,
-
     }
 
     public enum Rarity
@@ -23,7 +22,6 @@ public class BaseEnemy
         UNCOMMON,
         RARE,
         SUPERRARE
-
     }
 
     public Type EnemyType;

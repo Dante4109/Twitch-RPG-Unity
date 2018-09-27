@@ -28,8 +28,6 @@ public class EnemyStateMachine : MonoBehaviour {
     public GameObject HeroToAttack;
     private float animSpeed = 5f;
 
-    
-
 
     // Use this for initialization
     void Start()
@@ -124,8 +122,9 @@ public class EnemyStateMachine : MonoBehaviour {
         //reset BSM -> Wait
         BSM.battlestates = BattleStateMachine.PerformAction.WAIT;
 
-
+        //end corutine
         actionStarted = false;
+        
         //reset this enemy state
         cur_cooldown = 0f;
         currentState = TurnState.PROCESSING;

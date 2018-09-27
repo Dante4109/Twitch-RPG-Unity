@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class BattleStateMachine : MonoBehaviour {
@@ -34,6 +35,7 @@ public class BattleStateMachine : MonoBehaviour {
     private HandleTurn HeroChoice;
 
     public GameObject enemyButton;
+    //public Transform Spacer;
 
     
     
@@ -97,6 +99,19 @@ public class BattleStateMachine : MonoBehaviour {
         foreach (GameObject enemy in EnemiesInBattle) 
         {
             GameObject newButton = Instantiate(enemyButton) as GameObject;
+            EnemySelectButton button = newButton.GetComponent<EnemySelectButton> ();
+
+            EnemyStateMachine cur_enemy = enemy.GetComponent<EnemyStateMachine>();
+
+            Text buttonText = newButton.transform.FindChild ("Text").gameObject.GetComponent<Text> ();
+            buttonText.text = cur_enemy.enemy.name;
+
+            button.EnemyPrefab = enemy;
+
+            //newButton.transform.SetParent (Spacer, false); 
+
+            
+            
         }
     }
 }
