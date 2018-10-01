@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114141787424806776}
   - component: {fileID: 114312094650688442}
   - component: {fileID: 114244341338977598}
-  - component: {fileID: 114208864288372216}
+  - component: {fileID: 114620385161970352}
   m_Layer: 5
   m_Name: enemyButton
   m_TagString: Untagged
@@ -90,18 +90,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &114208864288372216
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1619739725275548}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 600bc5756b9412640820e4af9a068598, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  EnemyPrefab: {fileID: 0}
 --- !u!114 &114244341338977598
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -143,6 +131,18 @@ MonoBehaviour:
   m_FlexibleWidth: 0
   m_FlexibleHeight: 0
   m_LayoutPriority: 1
+--- !u!114 &114620385161970352
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1619739725275548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 600bc5756b9412640820e4af9a068598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemyPrefab: {fileID: 1619739725275548}
 --- !u!114 &114676777789133286
 MonoBehaviour:
   m_ObjectHideFlags: 1
