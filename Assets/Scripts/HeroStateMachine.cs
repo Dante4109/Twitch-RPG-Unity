@@ -53,10 +53,6 @@ public class HeroStateMachine : MonoBehaviour {
 
                 break;
 
-            case (TurnState.SELECTING):
-
-                break;
-
             case (TurnState.ACTION):
 
                 break;
