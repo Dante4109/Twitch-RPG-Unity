@@ -9,28 +9,28 @@ public class BattleStateMachine : MonoBehaviour {
 
     public enum PerformAction
     {
-            WAIT,
-            TAKEACTION,
-            PERFORMACTION
+            Wait,
+            TakeAction,
+            PerformAction
 
     }
     public PerformAction battlestates;
-
+    
     public List<HandleTurn> PerformList = new List<HandleTurn>();
 
     public List<GameObject> HerosInBattle = new List<GameObject>();
     public List<GameObject> EnemiesInBattle = new List<GameObject>();
 
-    public enum HeroGUI
+    public enum HeroGui
     {
-        ACTIVATE,
-        WAITING,
-        INPUT1,
-        INPUT2,
-        DONE
+        Activate,
+        Waiting,
+        Input1,
+        Input2,
+        Done
     }
 
-    public HeroGUI HeroInput;
+    public HeroGui HeroInput;
 
 
     public List<GameObject> HeroesToManage = new List<GameObject>();
@@ -46,9 +46,12 @@ public class BattleStateMachine : MonoBehaviour {
     void Start ()
 
     {
-        battlestates = PerformAction.WAIT;
+        battlestates = PerformAction.Wait;
         EnemiesInBattle.AddRange (GameObject.FindGameObjectsWithTag("Enemy"));
         HerosInBattle.AddRange(GameObject.FindGameObjectsWithTag("Hero"));
+        HeroInput = HeroGui.Activate;
+
+        
         EnemyButtons();
     }
     
@@ -57,38 +60,63 @@ public class BattleStateMachine : MonoBehaviour {
     {
 	    switch (battlestates)
         {
-            case (PerformAction.WAIT):
+            case (PerformAction.Wait):
                 if(PerformList.Count > 0)
                 {
-                    battlestates = PerformAction.TAKEACTION;
+                    battlestates = PerformAction.TakeAction;
                 }
 
                 
 
             break;
 
-            case (PerformAction.TAKEACTION):
+            case (PerformAction.TakeAction):
                 GameObject performer = GameObject.Find(PerformList[0].Attacker);
                 if (PerformList [0].Type == "Enemy") 
                 {
                     EnemyStateMachine ESM = performer.GetComponent<EnemyStateMachine>();
                     ESM.HeroToAttack = PerformList[0].AttackersTarget;
-                    ESM.currentState = EnemyStateMachine.TurnState.ACTION;
+                    ESM.currentState = EnemyStateMachine.TurnState.Action;
                 }
 
                 if (PerformList [0].Type == "Hero")
                 {
                   
                 }
-                battlestates = PerformAction.PERFORMACTION; 
+                battlestates = PerformAction.PerformAction; 
 
 
                 break;
 
-            case (PerformAction.PERFORMACTION):
+            case (PerformAction.PerformAction):
 
                 break;
         }
+
+        switch (HeroInput)
+        {
+            case (HeroGui.Activate):
+
+            break;
+
+            case (HeroGui.Waiting):
+
+                break;
+
+            case (HeroGui.Input1):
+
+                break;
+
+            case (HeroGui.Input2):
+
+                break;
+
+            case (HeroGui.Done):
+
+                break;
+        }
+
+
 	}
 
     public void CollectActions(HandleTurn input)

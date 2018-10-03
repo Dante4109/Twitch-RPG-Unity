@@ -10,12 +10,12 @@ public class HeroStateMachine : MonoBehaviour {
 
     public enum TurnState
     {
-        PROCESSING,
-        ADDTOLIST,
-        WAITING,
-        SELECTING,
-        ACTION,
-        DEAD
+        Processing,
+        AddToList,
+        ChooseAction,
+        Waiting,
+        Action,
+        Dead
     }
 
     public TurnState currentState;
@@ -28,7 +28,7 @@ public class HeroStateMachine : MonoBehaviour {
 	void Start ()
     {
         BSM = GameObject.Find("BattleManager").GetComponent<BattleStateMachine> ();
-        currentState = TurnState.PROCESSING;	
+        currentState = TurnState.Processing;	
 	}
 
     // Update is called once per frame
@@ -38,26 +38,26 @@ public class HeroStateMachine : MonoBehaviour {
         switch (currentState)
         {
             
-            case (TurnState.PROCESSING):
+            case (TurnState.Processing):
                     UpgradeProgressbar();
 
                 break;
 
-            case (TurnState.ADDTOLIST):
+            case (TurnState.AddToList):
                 BSM.HeroesToManage.Add(this.gameObject);
-                currentState = TurnState.WAITING;
+                currentState = TurnState.Waiting;
 
                 break;
 
-            case (TurnState.WAITING):
+            case (TurnState.Waiting):
 
                 break;
 
-            case (TurnState.ACTION):
+            case (TurnState.Action):
 
                 break;
 
-            case (TurnState.DEAD):
+            case (TurnState.Dead):
 
                 break;
         }
@@ -70,7 +70,7 @@ public class HeroStateMachine : MonoBehaviour {
             ProgressBar.transform.localScale = new Vector3(Mathf.Clamp(calc_cooldown, 0, 1), ProgressBar.transform.localScale.y, ProgressBar.transform.localScale.z);
             if (cur_cooldown >= max_cooldown)
             {
-                currentState = TurnState.ADDTOLIST;
+                currentState = TurnState.AddToList;
             }
 
 

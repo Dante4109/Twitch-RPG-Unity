@@ -10,11 +10,11 @@ public class EnemyStateMachine : MonoBehaviour {
 
     public enum TurnState
     {
-        PROCESSING,
-        CHOOSEACTION,
-        WAITING, 
-        ACTION,
-        DEAD
+        Processing,
+        ChooseAction,
+        Waiting, 
+        Action,
+        Dead
     }
 
     public TurnState currentState;
@@ -44,25 +44,25 @@ public class EnemyStateMachine : MonoBehaviour {
         switch (currentState)
         {
 
-            case (TurnState.PROCESSING):
+            case (TurnState.Processing):
                 UpgradeProgressbar();
                 break;
 
 
-            case (TurnState.CHOOSEACTION):
+            case (TurnState.ChooseAction):
                 ChooseAction();
-                currentState = TurnState.WAITING;
+                currentState = TurnState.Waiting;
                 break;
 
-            case (TurnState.WAITING):
+            case (TurnState.Waiting):
                 //idle state
                 break;
 
-            case (TurnState.ACTION):
+            case (TurnState.Action):
                 StartCoroutine(TimeForAction ());
                 break;
 
-            case (TurnState.DEAD):
+            case (TurnState.Dead):
 
                 break;
         }
@@ -74,7 +74,7 @@ public class EnemyStateMachine : MonoBehaviour {
         
         if (cur_cooldown >= max_cooldown)
         {
-            currentState = TurnState.CHOOSEACTION;
+            currentState = TurnState.ChooseAction;
         }
 
 
@@ -120,14 +120,14 @@ public class EnemyStateMachine : MonoBehaviour {
         BSM.PerformList.RemoveAt(0);
 
         //reset BSM -> Wait
-        BSM.battlestates = BattleStateMachine.PerformAction.WAIT;
+        BSM.battlestates = BattleStateMachine.PerformAction.Wait;
 
         //end corutine
         actionStarted = false;
         
         //reset this enemy state
         cur_cooldown = 0f;
-        currentState = TurnState.PROCESSING;
+        currentState = TurnState.Processing;
     }
 
     private bool MoveTowardsEnemy(Vector3 target)
@@ -140,6 +140,5 @@ public class EnemyStateMachine : MonoBehaviour {
         return target != (transform.position = Vector3.MoveTowards(transform.position, target, animSpeed * Time.deltaTime));
     }
 }
-
 
 
