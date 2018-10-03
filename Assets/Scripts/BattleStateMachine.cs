@@ -52,7 +52,9 @@ public class BattleStateMachine : MonoBehaviour {
         HerosInBattle.AddRange(GameObject.FindGameObjectsWithTag("Hero"));
         HeroInput = HeroGui.Activate;
 
-        
+        AttackPanel.SetActive(false);
+        EnemySelectPanel.SetActive(false); 
+
         EnemyButtons();
     }
     
@@ -97,7 +99,15 @@ public class BattleStateMachine : MonoBehaviour {
         switch (HeroInput)
         {
             case (HeroGui.Activate):
+                if(HeroesToManage.Count > 0)
+                {
+                    HeroesToManage[0].transform.FindChild ("Selector").gameObject.SetActive(true);
+                    HeroChoice = new HandleTurn();
 
+                    AttackPanel.SetActive(true);
+                    HeroInput = HeroGui.Waiting;
+                }
+                
             break;
 
             case (HeroGui.Waiting):
@@ -142,6 +152,16 @@ public class BattleStateMachine : MonoBehaviour {
 
             newButton.transform.SetParent(Spacer);
         }
+    }
+
+    public void Input1()//attack button
+    {
+        HeroChoice.Attacker = HeroesToManage[0].name;
+        HeroChoice.AttacksGameObject = HeroesToManage[0];
+        HeroChoice.Type = "Hero";
+
+        AttackPanel.SetActive(false);
+        EnemySelectPanel.SetActive(true);
     }
 }
 

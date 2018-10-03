@@ -22,11 +22,14 @@ public class HeroStateMachine : MonoBehaviour {
     //for the progressBar
     private float cur_cooldown = 0f;
     private float max_cooldown = 5f;
-    public Image ProgressBar; 
+    public Image ProgressBar;
+    public GameObject Selector;
 
     // Use this for initialization
 	void Start ()
     {
+        cur_cooldown = Random.Range(0, 2.5f); //manipulate with stats for character later 
+        Selector.SetActive(false);
         BSM = GameObject.Find("BattleManager").GetComponent<BattleStateMachine> ();
         currentState = TurnState.Processing;	
 	}

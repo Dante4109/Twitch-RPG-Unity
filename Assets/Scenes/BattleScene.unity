@@ -818,6 +818,7 @@ MonoBehaviour:
     agility: 0
   currentState: 0
   ProgressBar: {fileID: 977353490}
+  Selector: {fileID: 1848877852257056, guid: e096a26d2da9454419cbe2008a3396ea, type: 2}
 --- !u!23 &651781515
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1808,6 +1809,7 @@ MonoBehaviour:
     agility: 10
   currentState: 0
   ProgressBar: {fileID: 1173481030}
+  Selector: {fileID: 1848877852257056, guid: e096a26d2da9454419cbe2008a3396ea, type: 2}
 --- !u!23 &1679941688
 MeshRenderer:
   m_ObjectHideFlags: 0
