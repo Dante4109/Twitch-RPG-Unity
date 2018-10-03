@@ -32,8 +32,9 @@ public class EnemyStateMachine : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        currentState = TurnState.PROCESSING;
+        
         BSM = GameObject.Find("BattleManager").GetComponent<BattleStateMachine>();
+        currentState = TurnState.Processing;
         startposition = transform.position;
     }
 

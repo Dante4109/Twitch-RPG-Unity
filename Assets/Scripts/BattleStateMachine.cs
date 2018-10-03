@@ -39,7 +39,8 @@ public class BattleStateMachine : MonoBehaviour {
     public GameObject enemyButton;
     public Transform Spacer;
 
-    
+    public GameObject AttackPanel;
+    public GameObject EnemySelectPanel;
     
     
     // Use this for initialization
