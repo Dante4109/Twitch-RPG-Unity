@@ -1,18 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-
-public class EnemyStateMachine : MonoBehaviour {
+public class HeroStateMachine : MonoBehaviour {
 
     private BattleStateMachine BSM;
-    public BaseEnemy enemy;
+    public BaseHero hero;
 
     public enum TurnState
     {
         Processing,
+        AddToList,
         ChooseAction,
-        Waiting, 
+        Waiting,
         Action,
         Dead
     }
@@ -21,22 +22,27 @@ public class EnemyStateMachine : MonoBehaviour {
     //for the progressBar
     private float cur_cooldown = 0f;
     private float max_cooldown = 5f;
-    //this gameobject
-    private Vector3 startposition;
-    //timeforaction stuff
-    private bool actionStarted = false;
-    public GameObject HeroToAttack;
-    private float animSpeed = 5f;
+    public Image ProgressBar;
+    public GameObject Selector;
 
+    private float animSpeed = 10f;
+    private Vector3 startPosition;
+    //IeNumerator
+    public GameObject EnemyToAttack;
+    private bool actionStarted = false;
+    
 
     // Use this for initialization
-    void Start()
+	void Start ()
     {
-        
-        BSM = GameObject.Find("BattleManager").GetComponent<BattleStateMachine>();
-        currentState = TurnState.Processing;
-        startposition = transform.position;
-    }
+        startPosition = transform.position;
+        cur_cooldown = Random.Range(0, 2.5f); //manipulate with stats for character later 
+        Selector.SetActive(false);
+        BSM = GameObject.Find("BattleManager").GetComponent<BattleStateMachine> ();
+        currentState = TurnState.Processing;	
+	}
+    
+    
 
     // Update is called once per frame
     void Update()
@@ -44,23 +50,24 @@ public class EnemyStateMachine : MonoBehaviour {
         Debug.Log(currentState);
         switch (currentState)
         {
-
+            
             case (TurnState.Processing):
-                UpgradeProgressbar();
+                    UpgradeProgressbar();
+
                 break;
 
+            case (TurnState.AddToList):
+                    BSM.HeroesToManage.Add(this.gameObject);
+                    currentState = TurnState.Waiting;
 
-            case (TurnState.ChooseAction):
-                ChooseAction();
-                currentState = TurnState.Waiting;
                 break;
 
             case (TurnState.Waiting):
-                //idle state
+                //idle
                 break;
 
             case (TurnState.Action):
-                StartCoroutine(TimeForAction ());
+                    StartCoroutine(TimeForAction());
                 break;
 
             case (TurnState.Dead):
@@ -69,29 +76,18 @@ public class EnemyStateMachine : MonoBehaviour {
         }
     }
 
-    void UpgradeProgressbar()
-    {
-        cur_cooldown = cur_cooldown + Time.deltaTime;
-        
-        if (cur_cooldown >= max_cooldown)
+        void UpgradeProgressbar()
         {
-            currentState = TurnState.ChooseAction;
+            cur_cooldown = cur_cooldown + Time.deltaTime;
+            float calc_cooldown = cur_cooldown / max_cooldown;
+            ProgressBar.transform.localScale = new Vector3(Mathf.Clamp(calc_cooldown, 0, 1), ProgressBar.transform.localScale.y, ProgressBar.transform.localScale.z);
+            if (cur_cooldown >= max_cooldown)
+            {
+                currentState = TurnState.AddToList;
+            }
+
+
         }
-
-
-    }
-
-    void ChooseAction()
-    {
-        HandleTurn myAttack = new HandleTurn();
-
-        myAttack.Attacker = enemy.name;
-        myAttack.Type = "Enemy";
-        myAttack.AttacksGameObject = this.gameObject;
-        myAttack.AttackersTarget = BSM.HerosInBattle[Random.Range(0, BSM.HerosInBattle.Count)];
-        
-        BSM.CollectActions(myAttack);
-    }
 
     private IEnumerator TimeForAction()
     {
@@ -104,8 +100,8 @@ public class EnemyStateMachine : MonoBehaviour {
         actionStarted = true;
 
         //animate the enemy near the hero to attack
-        Vector3 heroPostion = new Vector3 (HeroToAttack.transform.position.x-1.5f, HeroToAttack.transform.position.y, HeroToAttack.transform.position.z); 
-        while (MoveTowardsEnemy(heroPostion)) { yield return null; } 
+        Vector3 enemyPostion = new Vector3(EnemyToAttack.transform.position.x + 1.5f, EnemyToAttack.transform.position.y, EnemyToAttack.transform.position.z);
+        while (MoveTowardsEnemy(enemyPostion)) { yield return null; }
 
 
         //wait abit
@@ -113,8 +109,8 @@ public class EnemyStateMachine : MonoBehaviour {
         //do damage
 
         //animate back to startposition 
-        Vector3 firstPositon = startposition; 
-        while (MoveTowardsStart (firstPositon)) { yield return null; }
+        Vector3 firstPositon = startPosition;
+        while (MoveTowardsStart(firstPositon)) { yield return null; }
 
 
         //remove this perform from the list in BSM
@@ -125,7 +121,7 @@ public class EnemyStateMachine : MonoBehaviour {
 
         //end corutine
         actionStarted = false;
-        
+
         //reset this enemy state
         cur_cooldown = 0f;
         currentState = TurnState.Processing;
@@ -142,4 +138,6 @@ public class EnemyStateMachine : MonoBehaviour {
     }
 }
 
+
+	
 

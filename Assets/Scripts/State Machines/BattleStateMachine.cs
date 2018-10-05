@@ -78,14 +78,17 @@ public class BattleStateMachine : MonoBehaviour {
                 if (PerformList [0].Type == "Enemy") 
                 {
                     EnemyStateMachine ESM = performer.GetComponent<EnemyStateMachine>();
-                    ESM.HeroToAttack = PerformList[0].AttackersTarget;
+                    ESM.heroToAttack = PerformList[0].AttackersTarget;
                     ESM.currentState = EnemyStateMachine.TurnState.Action;
                 }
 
                 if (PerformList [0].Type == "Hero")
                 {
-                  
+                    HeroStateMachine HSM = performer.GetComponent<HeroStateMachine>();
+                    HSM.EnemyToAttack = PerformList[0].AttackersTarget;
+                    HSM.currentState = HeroStateMachine.TurnState.Action;
                 }
+
                 battlestates = PerformAction.PerformAction; 
 
 
@@ -101,7 +104,7 @@ public class BattleStateMachine : MonoBehaviour {
             case (HeroGui.Activate):
                 if(HeroesToManage.Count > 0)
                 {
-                    HeroesToManage[0].transform.FindChild ("Selector").gameObject.SetActive(true);
+                    HeroesToManage[0].transform.Find("Selector").gameObject.SetActive(true);
                     HeroChoice = new HandleTurn();
 
                     AttackPanel.SetActive(true);
@@ -123,11 +126,11 @@ public class BattleStateMachine : MonoBehaviour {
                 break;
 
             case (HeroGui.Done):
-
+                HeroInputDone();
                 break;
         }
 
-
+        
 	}
 
     public void CollectActions(HandleTurn input)
@@ -145,8 +148,8 @@ public class BattleStateMachine : MonoBehaviour {
 
             EnemyStateMachine cur_enemy = enemy.GetComponent<EnemyStateMachine>();
 
-            Text buttonText = newButton.transform.FindChild("Text").gameObject.GetComponent<Text>();
-            buttonText.text = cur_enemy.enemy.name;
+            Text buttonText = newButton.transform.Find("Text").gameObject.GetComponent<Text>();
+            buttonText.text = cur_enemy.enemy.theName;
 
             button.EnemyPrefab = enemy;
 
@@ -162,6 +165,21 @@ public class BattleStateMachine : MonoBehaviour {
 
         AttackPanel.SetActive(false);
         EnemySelectPanel.SetActive(true);
+    }
+
+    public void Input2(GameObject chosenEnemy)//enemy selection
+    {
+        HeroChoice.AttackersTarget = chosenEnemy;
+        HeroInput = HeroGui.Done;
+    }
+
+    void HeroInputDone()
+    {
+        PerformList.Add(HeroChoice);
+        EnemySelectPanel.SetActive(false);
+        HeroesToManage[0].transform.Find("Selector").gameObject.SetActive(false);
+        HeroesToManage.RemoveAt(0);
+        HeroInput = HeroGui.Activate;
     }
 }
 
