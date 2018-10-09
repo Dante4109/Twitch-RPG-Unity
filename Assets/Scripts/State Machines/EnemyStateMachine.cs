@@ -52,7 +52,10 @@ public class EnemyStateMachine : MonoBehaviour {
 
 
             case (TurnState.ChooseAction):
-                ChooseAction();
+                if(BSM.HerosInBattle.Count > 0)
+                {
+                    ChooseAction();
+                }
                 currentState = TurnState.Waiting;
                 break;
 
@@ -86,7 +89,7 @@ public class EnemyStateMachine : MonoBehaviour {
     {
         HandleTurn myAttack = new HandleTurn();
 
-        myAttack.Attacker = enemy.theName;
+        myAttack.Attacker = enemy.name;
         myAttack.Type = "Enemy";
         myAttack.AttacksGameObject = this.gameObject;
         myAttack.AttackersTarget = BSM.HerosInBattle[Random.Range(0, BSM.HerosInBattle.Count)];

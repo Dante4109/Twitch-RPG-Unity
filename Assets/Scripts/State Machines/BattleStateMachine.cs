@@ -54,7 +54,7 @@ public class BattleStateMachine : MonoBehaviour {
 
         AttackPanel.SetActive(false);
         EnemySelectPanel.SetActive(false); 
-
+        //enemies to select 
         EnemyButtons();
     }
     
@@ -79,8 +79,10 @@ public class BattleStateMachine : MonoBehaviour {
                 {
                     EnemyStateMachine ESM = performer.GetComponent<EnemyStateMachine>();
                     ESM.heroToAttack = PerformList[0].AttackersTarget;
-                    ESM.currentState = EnemyStateMachine.TurnState.Action;
+                    ESM.currentState = EnemyStateMachine.TurnState.Action; 
                 }
+
+
 
                 if (PerformList [0].Type == "Hero")
                 {
@@ -149,7 +151,7 @@ public class BattleStateMachine : MonoBehaviour {
             EnemyStateMachine cur_enemy = enemy.GetComponent<EnemyStateMachine>();
 
             Text buttonText = newButton.transform.Find("Text").gameObject.GetComponent<Text>();
-            buttonText.text = cur_enemy.enemy.theName;
+            buttonText.text = cur_enemy.enemy.name;
 
             button.EnemyPrefab = enemy;
 

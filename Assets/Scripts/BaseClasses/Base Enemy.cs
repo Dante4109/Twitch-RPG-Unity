@@ -6,7 +6,7 @@ using UnityEngine;
 [System.Serializable]
 public class BaseEnemy
 {
-    public string theName;
+    public string name;
 
     public enum Type
     {
@@ -41,4 +41,5 @@ public class BaseEnemy
 
 
 }
+
 
