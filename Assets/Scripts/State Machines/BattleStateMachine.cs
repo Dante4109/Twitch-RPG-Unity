@@ -143,8 +143,10 @@ public class BattleStateMachine : MonoBehaviour {
 
     void EnemyButtons()
     {
+      
         foreach (GameObject enemy in EnemiesInBattle)
         {
+            
             GameObject newButton = Instantiate(enemyButton) as GameObject;
             EnemySelectButton button = newButton.GetComponent<EnemySelectButton>();
 
