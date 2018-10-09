@@ -149,7 +149,7 @@ public class BattleStateMachine : MonoBehaviour {
             EnemyStateMachine cur_enemy = enemy.GetComponent<EnemyStateMachine>();
 
             Text buttonText = newButton.transform.Find("Text").gameObject.GetComponent<Text>();
-            buttonText.text = cur_enemy.enemy.theName;
+            buttonText.text = cur_enemy.enemy.name;
 
             button.EnemyPrefab = enemy;
 

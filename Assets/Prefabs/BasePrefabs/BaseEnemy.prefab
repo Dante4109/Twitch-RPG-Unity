@@ -108,7 +108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy:
-    theName: 'Enemy '
+    name: 
     EnemyType: 0
     rarity: 0
     baseHP: 20

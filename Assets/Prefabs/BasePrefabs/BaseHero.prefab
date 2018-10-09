@@ -193,7 +193,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hero:
-    name: Hero 2
+    name: Hero 1
     baseHP: 200
     curHP: 200
     baseMP: 10
