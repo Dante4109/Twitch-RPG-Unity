@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HeroStateMachine : MonoBehaviour {
+public class HeroStateMachine : MonoBehaviour
+{
 
     private BattleStateMachine BSM;
     public BaseHero hero;
@@ -30,19 +31,20 @@ public class HeroStateMachine : MonoBehaviour {
     //timeforaction 
     private bool actionStarted = false;
     private float animSpeed = 10f;
-    
+    //dead
+    private bool alive = true;
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         startPosition = transform.position;
         cur_cooldown = Random.Range(0, 2.5f); //manipulate with stats for character later 
         Selector.SetActive(false);
-        BSM = GameObject.Find("BattleManager").GetComponent<BattleStateMachine> ();
-        currentState = TurnState.Processing;	
-	}
-    
-    
+        BSM = GameObject.Find("BattleManager").GetComponent<BattleStateMachine>();
+        currentState = TurnState.Processing;
+    }
+
+
 
     // Update is called once per frame
     void Update()
@@ -50,15 +52,15 @@ public class HeroStateMachine : MonoBehaviour {
         //Debug.Log(currentState);
         switch (currentState)
         {
-            
+
             case (TurnState.Processing):
-                    UpgradeProgressbar();
+                UpgradeProgressbar();
 
                 break;
 
             case (TurnState.AddToList):
-                    BSM.HeroesToManage.Add(this.gameObject);
-                    currentState = TurnState.Waiting;
+                BSM.HeroesToManage.Add(this.gameObject);
+                currentState = TurnState.Waiting;
 
                 break;
 
@@ -67,27 +69,32 @@ public class HeroStateMachine : MonoBehaviour {
                 break;
 
             case (TurnState.Action):
-                    StartCoroutine(TimeForAction());
+                StartCoroutine(TimeForAction());
                 break;
 
             case (TurnState.Dead):
+                {
+                    CheckIfDead();
+                }
+
+
 
                 break;
         }
     }
 
-        void UpgradeProgressbar()
+    void UpgradeProgressbar()
+    {
+        cur_cooldown = cur_cooldown + Time.deltaTime;
+        float calc_cooldown = cur_cooldown / max_cooldown;
+        ProgressBar.transform.localScale = new Vector3(Mathf.Clamp(calc_cooldown, 0, 1), ProgressBar.transform.localScale.y, ProgressBar.transform.localScale.z);
+        if (cur_cooldown >= max_cooldown)
         {
-            cur_cooldown = cur_cooldown + Time.deltaTime;
-            float calc_cooldown = cur_cooldown / max_cooldown;
-            ProgressBar.transform.localScale = new Vector3(Mathf.Clamp(calc_cooldown, 0, 1), ProgressBar.transform.localScale.y, ProgressBar.transform.localScale.z);
-            if (cur_cooldown >= max_cooldown)
-            {
-                currentState = TurnState.AddToList;
-            }
-
-
+            currentState = TurnState.AddToList;
         }
+
+
+    }
 
     private IEnumerator TimeForAction()
     {
@@ -132,20 +139,63 @@ public class HeroStateMachine : MonoBehaviour {
         return target != (transform.position = Vector3.MoveTowards(transform.position, target, animSpeed * Time.deltaTime));
     }
 
+
     private bool MoveTowardsStart(Vector3 target)
     {
         return target != (transform.position = Vector3.MoveTowards(transform.position, target, animSpeed * Time.deltaTime));
     }
 
+
     public void TakeDamage(float getDamageAmount)
     {
         hero.curHP -= getDamageAmount;
-        if(hero.curHP <= 0)
+        if (hero.curHP <= 0)
         {
             currentState = TurnState.Dead;
         }
     }
+
+
+    public void CheckIfDead()
+    {
+        if (!alive)
+        {
+            return;
+        }
+        else
+        {
+            //change tag
+            this.gameObject.tag = "DeadHero";
+            //not attackable by enemy
+            BSM.HerosInBattle.Remove(this.gameObject);
+            //not managable
+            BSM.HeroesToManage.Remove(this.gameObject);
+            //deactivate the selector
+            Selector.SetActive(false);
+            //reset gui 
+            BSM.AttackPanel.SetActive(false);
+            BSM.EnemySelectPanel.SetActive(false);
+            //reset item from performlist
+            for (int i = 0; i < BSM.PerformList.Count; i++)
+            {
+                if (BSM.PerformList[i].AttackersGameObject == this.gameObject)
+                {
+                    BSM.PerformList.Remove(BSM.PerformList[i]);
+                }
+
+            }
+            //change color / play animation
+            this.gameObject.GetComponent<MeshRenderer>().material.color = new Color32(105, 105, 105, 255);
+            //reset heroinput
+            BSM.HeroInput = BattleStateMachine.HeroGui.Activate;
+            alive = false;
+
+        }
+    }
 }
+
+
+
 
     
 

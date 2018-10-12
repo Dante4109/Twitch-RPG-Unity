@@ -91,7 +91,7 @@ public class EnemyStateMachine : MonoBehaviour {
 
         myAttack.Attacker = enemy.name;
         myAttack.Type = "Enemy";
-        myAttack.AttacksGameObject = this.gameObject;
+        myAttack.AttackersGameObject = this.gameObject;
         myAttack.AttackersTarget = BSM.HerosInBattle[Random.Range(0, BSM.HerosInBattle.Count)];
 
         int num = Random.Range(0, enemy.attacks.Count);

@@ -164,7 +164,7 @@ public class BattleStateMachine : MonoBehaviour {
     public void Input1()//attack button
     {
         HeroChoice.Attacker = HeroesToManage[0].name;
-        HeroChoice.AttacksGameObject = HeroesToManage[0];
+        HeroChoice.AttackersGameObject = HeroesToManage[0];
         HeroChoice.Type = "Hero";
 
         AttackPanel.SetActive(false);
