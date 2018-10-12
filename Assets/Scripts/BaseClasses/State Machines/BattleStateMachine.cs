@@ -45,7 +45,6 @@ public class BattleStateMachine : MonoBehaviour {
     
     // Use this for initialization
     void Start ()
-
     {
         battlestates = PerformAction.Wait;
         EnemiesInBattle.AddRange (GameObject.FindGameObjectsWithTag("Enemy"));
@@ -78,8 +77,21 @@ public class BattleStateMachine : MonoBehaviour {
                 if (PerformList [0].Type == "Enemy") 
                 {
                     EnemyStateMachine ESM = performer.GetComponent<EnemyStateMachine>();
-                    ESM.heroToAttack = PerformList[0].AttackersTarget;
-                    ESM.currentState = EnemyStateMachine.TurnState.Action; 
+                        for(int i = 0; i < HerosInBattle.Count; i++)
+                    {
+                        if(PerformList[0].AttackersTarget == HerosInBattle[i])
+                        {
+                            ESM.heroToAttack = PerformList[0].AttackersTarget;
+                            ESM.currentState = EnemyStateMachine.TurnState.Action;
+                            break;
+                        }
+                        else
+                        {
+                            PerformList[0].AttackersTarget = HerosInBattle[Random.Range(0, HerosInBattle.Count)];
+                            ESM.heroToAttack = PerformList[0].AttackersTarget;
+                            ESM.currentState = EnemyStateMachine.TurnState.Action;
+                        }
+                    }
                 }
 
 
