@@ -23,17 +23,17 @@ public class HeroStateMachine : MonoBehaviour {
     private float cur_cooldown = 0f;
     private float max_cooldown = 5f;
     public Image ProgressBar;
+    //this gameobject
     public GameObject Selector;
-
-    private float animSpeed = 10f;
     private Vector3 startPosition;
-    //IeNumerator
     public GameObject EnemyToAttack;
+    //timeforaction 
     private bool actionStarted = false;
+    private float animSpeed = 10f;
     
 
     // Use this for initialization
-	void Start ()
+    void Start ()
     {
         startPosition = transform.position;
         cur_cooldown = Random.Range(0, 2.5f); //manipulate with stats for character later 

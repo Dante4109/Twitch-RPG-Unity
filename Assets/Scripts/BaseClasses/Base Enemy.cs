@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 [System.Serializable]
-public class BaseEnemy
+public class BaseEnemy : BaseClass
 {
     public string name;
 
@@ -26,19 +26,6 @@ public class BaseEnemy
 
     public Type EnemyType;
     public Rarity rarity;
-
-    public float baseHP;
-    public float curHP;
-
-    public float baseMP;
-    public float curMP;
-
-    public float baseATK;
-    public float curATK;
-
-    public float baseDEF;
-    public float curDEF;
-
-
 }
+
 
