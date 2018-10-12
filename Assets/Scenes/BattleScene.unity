@@ -393,6 +393,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114759080857220448, guid: e48a8b327db2bee4c996dedbcdc779ef,
+        type: 2}
+      propertyPath: enemy.attacks.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4442434505669422, guid: e48a8b327db2bee4c996dedbcdc779ef, type: 2}
       propertyPath: m_LocalPosition.x
       value: -2.44
@@ -438,6 +443,18 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114759080857220448, guid: e48a8b327db2bee4c996dedbcdc779ef,
+        type: 2}
+      propertyPath: enemy.attacks.Array.data[0]
+      value: 
+      objectReference: {fileID: 114544816829359338, guid: 70bbfcc27ea300f40907d4bcc4fa2eb7,
+        type: 2}
+    - target: {fileID: 114759080857220448, guid: e48a8b327db2bee4c996dedbcdc779ef,
+        type: 2}
+      propertyPath: enemy.attacks.Array.data[1]
+      value: 
+      objectReference: {fileID: 114513309657967090, guid: 148346d41d53c084da8cacd2134801cc,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e48a8b327db2bee4c996dedbcdc779ef, type: 2}
   m_IsPrefabParent: 0
@@ -550,7 +567,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 585981162}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.34109497, y: -0.5, z: 0}
+  m_LocalPosition: {x: 0.3411026, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1448392207}
@@ -607,7 +624,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 660804345}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -219.70499, y: -198.26149, z: 0}
+  m_LocalPosition: {x: -152.27249, y: -198.26149, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 896984146}
@@ -663,6 +680,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114548835615966412, guid: f5bdfcf05ab1c8a4c89550a0d6adb3fe,
+        type: 2}
+      propertyPath: hero.attacks.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4363669421055204, guid: f5bdfcf05ab1c8a4c89550a0d6adb3fe, type: 2}
       propertyPath: m_LocalPosition.x
       value: 4.48
@@ -803,7 +825,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 896984142}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 396, y: 273.5, z: 0}
+  m_LocalPosition: {x: 274.5, y: 273.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1912388487}
@@ -1364,7 +1386,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1390659808}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -247.5596, y: -198.26251, z: 0}
+  m_LocalPosition: {x: -171.36816, y: -198.26251, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1713494463}
@@ -1435,7 +1457,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1448392206}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -247.66519, y: -198.43747, z: 0}
+  m_LocalPosition: {x: -171.47372, y: -198.43747, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 585981163}
@@ -1701,9 +1723,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy:
-    name: Enemy 2
-    EnemyType: 0
-    rarity: 0
+    theName: 
     baseHP: 20
     curHP: 20
     baseMP: 10
@@ -1712,6 +1732,11 @@ MonoBehaviour:
     curATK: 0
     baseDEF: 0
     curDEF: 0
+    attacks:
+    - {fileID: 114544816829359338, guid: 70bbfcc27ea300f40907d4bcc4fa2eb7, type: 2}
+    name: Enemy 2
+    EnemyType: 0
+    rarity: 0
   currentState: 0
   Selector: {fileID: 1848877852257056, guid: e096a26d2da9454419cbe2008a3396ea, type: 2}
   heroToAttack: {fileID: 0}
@@ -1795,7 +1820,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1912388486}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 176.52, y: -198.2875, z: 0}
+  m_LocalPosition: {x: 122.4525, y: -198.2875, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 674689120}
