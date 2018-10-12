@@ -42,7 +42,7 @@ public class EnemyStateMachine : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(currentState);
+        //Debug.Log(currentState);
         switch (currentState)
         {
 
@@ -96,7 +96,9 @@ public class EnemyStateMachine : MonoBehaviour {
 
         int num = Random.Range(0, enemy.attacks.Count);
         myAttack.chosenAttack = enemy.attacks[num];
-        Debug.Log(this.gameObject.name + " has choosen " + myAttack.chosenAttack.attackName + "and do " + myAttack.chosenAttack.attackDamage);
+        Debug.Log(this.gameObject.name + " has choosen " + myAttack.chosenAttack.attackName + " and has inflicted " + myAttack.chosenAttack.attackDamage + " damage ");
+        
+        
 
         BSM.CollectActions(myAttack); 
 
@@ -121,7 +123,7 @@ public class EnemyStateMachine : MonoBehaviour {
         //wait abit
         yield return new WaitForSeconds(0.5f);
         //do damage
-
+        DoDamage();
         //animate back to startposition 
         Vector3 firstPositon = startPosition; 
         while (MoveTowardsStart (firstPositon)) { yield return null; }
@@ -149,6 +151,12 @@ public class EnemyStateMachine : MonoBehaviour {
     private bool MoveTowardsStart(Vector3 target)
     {
         return target != (transform.position = Vector3.MoveTowards(transform.position, target, animSpeed * Time.deltaTime));
+    }
+
+    void DoDamage()
+    {
+        float calc_damage = enemy.curATK + BSM.PerformList[0].chosenAttack.attackDamage;
+        heroToAttack.GetComponent<HeroStateMachine>().TakeDamage(calc_damage);
     }
 }
 

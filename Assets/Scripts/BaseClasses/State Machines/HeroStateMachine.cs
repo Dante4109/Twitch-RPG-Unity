@@ -47,7 +47,7 @@ public class HeroStateMachine : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(currentState);
+        //Debug.Log(currentState);
         switch (currentState)
         {
             
@@ -136,7 +136,18 @@ public class HeroStateMachine : MonoBehaviour {
     {
         return target != (transform.position = Vector3.MoveTowards(transform.position, target, animSpeed * Time.deltaTime));
     }
+
+    public void TakeDamage(float getDamageAmount)
+    {
+        hero.curHP -= getDamageAmount;
+        if(hero.curHP <= 0)
+        {
+            currentState = TurnState.Dead;
+        }
+    }
 }
+
+    
 
 
 	
