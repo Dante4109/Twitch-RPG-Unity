@@ -164,6 +164,7 @@ public class HeroStateMachine : MonoBehaviour
             hero.curHP = 0;
             currentState = TurnState.Dead;
         }
+        UpdateHeroPanel();
     }
 
     public void CreateHeroPanel()
@@ -176,6 +177,13 @@ public class HeroStateMachine : MonoBehaviour
 
         ProgressBar = stats.ProgressBar;
         HeroPanel.transform.SetParent(HeroPanelSpacer, false);
+    }
+
+    //update stats on damage/heal 
+    void UpdateHeroPanel()
+    {
+        stats.HeroHP.text = "HP: " + hero.curHP;
+        stats.HeroMP.text = "MP: " + hero.curMP;
     }
 
 
