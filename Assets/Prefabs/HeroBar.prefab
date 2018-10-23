@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 222916306036474482}
   - component: {fileID: 114868348842328402}
   - component: {fileID: 114725705705330224}
+  - component: {fileID: 114048427375337828}
   m_Layer: 5
   m_Name: HeroBar
   m_TagString: Untagged
@@ -158,6 +159,21 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114048427375337828
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1058878714463548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1b3d806350089541b6eefbd210d1b09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HeroName: {fileID: 114049138093945184}
+  HeroHP: {fileID: 114805788473681920}
+  HeroMP: {fileID: 114412879709208400}
+  ProgressBar: {fileID: 114826744400939830}
 --- !u!114 &114049138093945184
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -33,10 +33,20 @@ public class HeroStateMachine : MonoBehaviour
     private float animSpeed = 10f;
     //dead
     private bool alive = true;
+    //heroPanel
+    private HeroPanelStats stats;
+    public GameObject HeroPanel;
+    private Transform HeroPanelSpacer;
 
     // Use this for initialization
     void Start()
     {
+
+        //find spacer
+        HeroPanelSpacer = GameObject.Find("BattleCanvas").transform.Find("HeroPanel").transform.Find("HeroPanelSpacer");
+        //create panel, fill in info 
+        CreateHeroPanel();
+
         startPosition = transform.position;
         cur_cooldown = Random.Range(0, 2.5f); //manipulate with stats for character later 
         Selector.SetActive(false);
@@ -151,8 +161,21 @@ public class HeroStateMachine : MonoBehaviour
         hero.curHP -= getDamageAmount;
         if (hero.curHP <= 0)
         {
+            hero.curHP = 0;
             currentState = TurnState.Dead;
         }
+    }
+
+    public void CreateHeroPanel()
+    {
+        HeroPanel = Instantiate(HeroPanel) as GameObject;
+        stats = HeroPanel.GetComponent<HeroPanelStats>();
+        stats.HeroName.text = hero.theName;
+        stats.HeroHP.text = "HP: " + hero.curHP;
+        stats.HeroMP.text = "MP: " + hero.curMP;
+
+        ProgressBar = stats.ProgressBar;
+        HeroPanel.transform.SetParent(HeroPanelSpacer, false);
     }
 
 
