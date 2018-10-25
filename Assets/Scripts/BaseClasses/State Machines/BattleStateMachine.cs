@@ -41,6 +41,13 @@ public class BattleStateMachine : MonoBehaviour {
 
     public GameObject AttackPanel;
     public GameObject EnemySelectPanel;
+    public GameObject MagicPanel;
+
+    //magic attack
+    public Transform actionSpacer;
+    public Transform magicSpacer;
+    public GameObject actionButton;
+    private List<GameObject> attackButtons = new List<GameObject>();
     
     
     // Use this for initialization
@@ -122,6 +129,10 @@ public class BattleStateMachine : MonoBehaviour {
                     HeroChoice = new HandleTurn();
 
                     AttackPanel.SetActive(true);
+
+                    //populate action buttons 
+                    CreateAttackButtons();
+                    
                     HeroInput = HeroGui.Waiting;
                 }
                 
@@ -196,6 +207,18 @@ public class BattleStateMachine : MonoBehaviour {
         HeroesToManage[0].transform.Find("Selector").gameObject.SetActive(false);
         HeroesToManage.RemoveAt(0);
         HeroInput = HeroGui.Activate;
+    }
+
+
+    //creeate actionbuttons
+    void CreateAttackButtons()
+    {
+        GameObject AttackButton = Instantiate(actionButton) as GameObject;
+        Text AttackButtonText = AttackButton.transform.Find("Text").gameObject.GetComponent<Text>();
+        AttackButtonText.text = "Attack";
+        AttackButton.GetComponent<Button>().onClick.AddListener(() => Input1());
+        AttackButton.transform.SetParent(AttackPanel.transform, false);
+        attackButtons.Add(AttackButton);
     }
 }
 
