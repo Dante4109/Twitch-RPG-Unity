@@ -59,7 +59,8 @@ public class BattleStateMachine : MonoBehaviour {
         HeroInput = HeroGui.Activate;
 
         AttackPanel.SetActive(false);
-        EnemySelectPanel.SetActive(false); 
+        EnemySelectPanel.SetActive(false);
+        MagicPanel.SetActive(false);
         //enemies to select 
         EnemyButtons();
     }
@@ -204,9 +205,17 @@ public class BattleStateMachine : MonoBehaviour {
     {
         PerformList.Add(HeroChoice);
         EnemySelectPanel.SetActive(false);
+
+        //clean the attackpanel 
+        foreach(GameObject attackButton in attackButtons)
+        {
+            Destroy(attackButton);
+        }
+
         HeroesToManage[0].transform.Find("Selector").gameObject.SetActive(false);
         HeroesToManage.RemoveAt(0);
         HeroInput = HeroGui.Activate;
+        
     }
 
 
@@ -217,7 +226,7 @@ public class BattleStateMachine : MonoBehaviour {
         Text AttackButtonText = AttackButton.transform.Find("Text").gameObject.GetComponent<Text>();
         AttackButtonText.text = "Attack";
         AttackButton.GetComponent<Button>().onClick.AddListener(() => Input1());
-        AttackButton.transform.SetParent(AttackPanel.transform, false);
+        AttackButton.transform.SetParent(actionSpacer, false);
         attackButtons.Add(AttackButton);
     }
 }
