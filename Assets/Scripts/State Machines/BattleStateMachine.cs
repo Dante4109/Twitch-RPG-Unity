@@ -184,6 +184,7 @@ public class BattleStateMachine : MonoBehaviour
             button.EnemyPrefab = enemy;
 
             newButton.transform.SetParent(Spacer);
+            newButton.transform.localScale = new Vector3(1, 1, 1);// Note: Fix in inspector eventually... 
         }
     }
 
@@ -233,11 +234,10 @@ public class BattleStateMachine : MonoBehaviour
         attackButtons.Add(AttackButton);
 
         GameObject MagicAttackButton = Instantiate(actionButton) as GameObject;
-        Text MagicAttackButtonText = AttackButton.transform.Find("Text").gameObject.GetComponent<Text>();
+        Text MagicAttackButtonText = MagicAttackButton.transform.Find("Text").gameObject.GetComponent<Text>();
         MagicAttackButtonText.text = "Magic";
         MagicAttackButton.GetComponent<Button>().onClick.AddListener(() => Input3());
         MagicAttackButton.transform.SetParent(actionSpacer, false);
-        MagicAttackButton.transform.SetParent(magicSpacer, false);
         attackButtons.Add(MagicAttackButton);
 
         if (HeroesToManage[0].GetComponent<HeroStateMachine>().hero.MagicAttacks.Count > 0)

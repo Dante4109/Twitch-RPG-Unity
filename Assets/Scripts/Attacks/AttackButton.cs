@@ -11,3 +11,4 @@ public class AttackButton : MonoBehaviour {
         GameObject.Find("BattleManager").GetComponent<BattleStateMachine>().Input4(magicAttackToPerform);
     }
 }
+
