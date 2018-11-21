@@ -12,8 +12,10 @@ public class BattleStateMachine : MonoBehaviour
     {
         Wait,
         TakeAction,
-        PerformAction
-
+        PerformAction,
+        CheckAlive,
+        Win,
+        Lose
     }
     public PerformAction battlestates;
 
@@ -40,11 +42,12 @@ public class BattleStateMachine : MonoBehaviour
     public GameObject enemyButton;
     public Transform Spacer;
 
+    //GUI selection panels 
     public GameObject AttackPanel;
     public GameObject EnemySelectPanel;
     public GameObject MagicPanel;
 
-    //magic attack
+    //hero attacks
     public Transform actionSpacer;
     public Transform magicSpacer;
     public GameObject actionButton;
@@ -52,7 +55,11 @@ public class BattleStateMachine : MonoBehaviour
     private List<GameObject> attackButtons = new List<GameObject>();
 
 
-    // Use this for initialization
+    //enemy buttons
+    private List<GameObject> enemyBtns = new List<GameObject>();
+
+    
+
     void Start()
     {
         battlestates = PerformAction.Wait;
@@ -114,13 +121,50 @@ public class BattleStateMachine : MonoBehaviour
                 }
 
                 battlestates = PerformAction.PerformAction;
-
-
                 break;
 
             case (PerformAction.PerformAction):
-
+                    //idle    
                 break;
+
+            case (PerformAction.CheckAlive):
+                if (HerosInBattle.Count < 1)
+                {
+                    battlestates = PerformAction.Lose;
+                    //lose the battle
+                }
+                else if (EnemiesInBattle.Count < 1)
+                {
+                    battlestates = PerformAction.Win;
+                    //win the battle
+                    //gain experience
+                    //gain money 
+                }
+                else
+                {
+                    //call function
+                    ClearAttackPanel();
+                    HeroInput = HeroGui.Activate;
+                }
+                break;
+
+            case (PerformAction.Win):
+                {
+                    Debug.Log("You won the battle!");
+                        for (int i = 0; i < HerosInBattle.Count; i++)
+                        {
+                        HerosInBattle[i].GetComponent<HeroStateMachine>().currentState = HeroStateMachine.TurnState.Waiting;
+                        }
+                }
+                break;
+
+            case (PerformAction.Lose):
+                {
+                    Debug.Log("You lost the battle!");
+                }
+                break;
+
+
         }
 
         switch (HeroInput)
@@ -167,9 +211,16 @@ public class BattleStateMachine : MonoBehaviour
 
     }
 
-    void EnemyButtons()
+    public void EnemyButtons()
     {
+        //clean up
+        foreach(GameObject enemyBtn in enemyBtns)
+        {
+            Destroy(enemyBtn); 
+        }
+        enemyBtns.Clear();
 
+        //create buttons
         foreach (GameObject enemy in EnemiesInBattle)
         {
 
@@ -185,6 +236,8 @@ public class BattleStateMachine : MonoBehaviour
 
             newButton.transform.SetParent(Spacer);
             newButton.transform.localScale = new Vector3(1, 1, 1);// Note: Fix in inspector eventually... 
+
+            enemyBtns.Add(newButton);
         }
     }
 
@@ -193,7 +246,7 @@ public class BattleStateMachine : MonoBehaviour
         HeroChoice.Attacker = HeroesToManage[0].name;
         HeroChoice.AttackersGameObject = HeroesToManage[0];
         HeroChoice.Type = "Hero";
-
+        HeroChoice.chosenAttack = HeroesToManage[0].GetComponent<HeroStateMachine>().hero.attacks[0];
         AttackPanel.SetActive(false);
         EnemySelectPanel.SetActive(true);
     }
@@ -207,19 +260,26 @@ public class BattleStateMachine : MonoBehaviour
     void HeroInputDone()
     {
         PerformList.Add(HeroChoice);
+        // clean the attackpanel
+        ClearAttackPanel();
         EnemySelectPanel.SetActive(false);
 
-        //clean the attackpanel 
+        HeroesToManage[0].transform.Find("Selector").gameObject.SetActive(false);
+        HeroesToManage.RemoveAt(0);
+        HeroInput = HeroGui.Activate;
+    }
+
+    void ClearAttackPanel()
+    {
+        EnemySelectPanel.SetActive(false);
+        AttackPanel.SetActive(false);
+        MagicPanel.SetActive(false);
+
         foreach (GameObject attackButton in attackButtons)
         {
             Destroy(attackButton);
         }
         attackButtons.Clear();
-
-        HeroesToManage[0].transform.Find("Selector").gameObject.SetActive(false);
-        HeroesToManage.RemoveAt(0);
-        HeroInput = HeroGui.Activate;
-
     }
 
 
