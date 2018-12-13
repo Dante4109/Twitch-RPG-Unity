@@ -20,7 +20,10 @@ namespace Console
 
             public void AddCommandToConsole()
             {
+                string addMessage = " command has been added to the console.";
 
+                DeveloperConsole.AddCommandsToConsole(Command, this);
+                DeveloperConsole.AddStaticMessageToConsole(Name + addMessage);
             }
 
             public abstract void RunCommand();
@@ -51,11 +54,14 @@ namespace Console
         private void Start()
         {
             ConsoleCanvas.gameObject.SetActive(false);
+            CreateCommands();
         }
 
         private void CreateCommands()
         {
-
+            CommandQuit commandQuit = CommandQuit.CreateCommand();
+            CommandHelloWorld commandHelloWorld = CommandHelloWorld.CreateCommand();
+            CommandClear commandClear = CommandClear.CreateCommand();
         }
 
         public static void AddCommandsToConsole(string _name, ConsoleCommand _command)
@@ -64,15 +70,62 @@ namespace Console
             {
                 Commands.Add(_name, _command);
             }
-
         }
 
         private void Update()
         {
-             if(Input.GetKeyDown(KeyCode.BackQuote))
-                
+            if (Input.GetKeyDown(KeyCode.BackQuote))
+            {
+                ConsoleCanvas.gameObject.SetActive(!ConsoleCanvas.gameObject.activeInHierarchy);
+            }
+
+            if(ConsoleCanvas.gameObject.activeInHierarchy)
+            {
+                if(Input.GetKeyDown(KeyCode.Return))
+                {
+                    if(inputText.text != "")
+                    {
+                        AddMessageToConsole(inputText.text);
+                        ParseInput(inputText.text);
+                        consoleInput.text = "";    
+                    }
+                }
+            }
         }
 
+        private void AddMessageToConsole(string msg)
+        {
+            consoleText.text += msg + "\n";
+            //scrollRect.verticalNormalizedPosition = 0f; 
+        }
+
+        public static void AddStaticMessageToConsole(string msg)
+        {
+            DeveloperConsole.Instance.consoleText.text += msg + "\n";
+            //DeveloperConsole.Instance.scrollRect.verticalNormalizedPosition = 0f;
+        }
+
+        private void ParseInput(string input)
+        {
+            string[] _input = input.Split(null);
+
+            if (_input.Length == 0 || _input == null)
+            {
+                AddMessageToConsole("Command not recognized.");
+                return;
+            }
+
+            if (!Commands.ContainsKey(_input[0]))
+            {
+                AddMessageToConsole("Command not recognized.");
+            }
+
+            else
+            {
+                Commands[_input[0]].RunCommand(); 
+            }
+        }
+        
     }
 
 }
