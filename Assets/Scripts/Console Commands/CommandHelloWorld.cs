@@ -31,6 +31,8 @@ namespace Console
             //Command logic 
             DeveloperConsole.AddStaticMessageToConsole("Hello World Test");
 
+            //CommandLog
+            DeveloperConsole.AddCommandToCommandLog(Command);
         }
 
         public static CommandHelloWorld CreateCommand()

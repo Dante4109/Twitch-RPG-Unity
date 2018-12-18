@@ -30,11 +30,15 @@ namespace Console
             //Command logic 
             DeveloperConsole.Instance.consoleText.text = "";
 
+            //CommandLog
+            DeveloperConsole.AddCommandToCommandLog(Command);
         }
 
         public static CommandClear CreateCommand()
         {
             return new CommandClear();
         }
+
+        
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,9 +30,15 @@ namespace Console
             public abstract void RunCommand();
         }
 
+         
+
         public static DeveloperConsole Instance { get; private set; }
 
         public static Dictionary<string, ConsoleCommand> Commands { get; private set; }
+
+        public IList<string> CommandLog = new List<string>();
+
+        public IList<string> ConsoleTextLog = new List<string>();
 
         [Header("UI Components")]
         public Canvas ConsoleCanvas;
@@ -39,6 +46,7 @@ namespace Console
         public Text consoleText;
         public Text inputText;
         public InputField consoleInput;
+
 
         private void Awake()
         {
@@ -62,6 +70,7 @@ namespace Console
             CommandQuit commandQuit = CommandQuit.CreateCommand();
             CommandHelloWorld commandHelloWorld = CommandHelloWorld.CreateCommand();
             CommandClear commandClear = CommandClear.CreateCommand();
+            CommandPreviousCommands commandPreviousCommands = CommandPreviousCommands.CreateCommand();
         }
 
         public static void AddCommandsToConsole(string _name, ConsoleCommand _command)
@@ -86,6 +95,7 @@ namespace Console
                     if(inputText.text != "")
                     {
                         AddMessageToConsole(inputText.text);
+                        AddTextToConsoleTextLog(inputText.text);
                         ParseInput(inputText.text);
                         consoleInput.text = "";    
                     }
@@ -93,12 +103,26 @@ namespace Console
             }
         }
 
+        //This is the command itself entered into the console. 
         private void AddMessageToConsole(string msg)
         {
             consoleText.text += msg + "\n";
             //scrollRect.verticalNormalizedPosition = 0f; 
         }
 
+        public static void AddCommandToCommandLog(string msg)
+        {
+            DeveloperConsole.Instance.CommandLog.Add(msg);
+        }
+
+        private void AddTextToConsoleTextLog(string txt)
+        {
+            ConsoleTextLog.Add(txt);
+        }
+
+        
+
+        //This is the output of a command 
         public static void AddStaticMessageToConsole(string msg)
         {
             DeveloperConsole.Instance.consoleText.text += msg + "\n";
@@ -125,8 +149,19 @@ namespace Console
                 Commands[_input[0]].RunCommand(); 
             }
         }
-        
+
+        public IList<string> GetCommandLog()
+        {
+            return CommandLog;
+        }
+
+        public IList<string> GetConsoleTextLog()
+        {
+            return ConsoleTextLog;
+        }
     }
+
+    
 
 }
 
