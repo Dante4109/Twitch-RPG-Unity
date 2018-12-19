@@ -30,15 +30,24 @@ namespace Console
             public abstract void RunCommand();
         }
 
-         
+        
 
         public static DeveloperConsole Instance { get; private set; }
 
         public static Dictionary<string, ConsoleCommand> Commands { get; private set; }
+        public int TextLogPosition { get; private set; }
 
         public IList<string> CommandLog = new List<string>();
 
         public IList<string> ConsoleTextLog = new List<string>();
+
+        public int GetTextLogPosition()
+        {
+            return TextLogPosition =  ConsoleTextLog.Count - 1;
+        }
+
+        
+
 
         [Header("UI Components")]
         public Canvas ConsoleCanvas;
@@ -46,6 +55,7 @@ namespace Console
         public Text consoleText;
         public Text inputText;
         public InputField consoleInput;
+        public Button enterBtn; 
 
 
         private void Awake()
@@ -63,6 +73,7 @@ namespace Console
         {
             ConsoleCanvas.gameObject.SetActive(false);
             CreateCommands();
+            GetTextLogPosition();
         }
 
         private void CreateCommands()
@@ -83,6 +94,8 @@ namespace Console
 
         private void Update()
         {
+            
+
             if (Input.GetKeyDown(KeyCode.BackQuote))
             {
                 ConsoleCanvas.gameObject.SetActive(!ConsoleCanvas.gameObject.activeInHierarchy);
@@ -92,14 +105,49 @@ namespace Console
             {
                 if(Input.GetKeyDown(KeyCode.Return))
                 {
-                    if(inputText.text != "")
-                    {
-                        AddMessageToConsole(inputText.text);
-                        AddTextToConsoleTextLog(inputText.text);
-                        ParseInput(inputText.text);
-                        consoleInput.text = "";    
-                    }
+                    ProcessOnSubmit(); 
                 }
+
+                if (Input.GetKeyDown(KeyCode.DownArrow) && ConsoleTextLog.Count > 0)
+                {
+                    if (TextLogPosition > 0)
+                    {
+                        TextLogPosition = TextLogPosition - 1;
+                        consoleInput.text = ConsoleTextLog[TextLogPosition];
+                        Debug.Log("Position: " + TextLogPosition);
+                        Debug.Log("Down Arrow Pressed");
+                    }
+                    else
+                    {
+                        consoleInput.text = "";
+                        Debug.Log("Down Arrow Pressed");
+                    }
+                    
+                    //cycle to previous string in ConsoleTextLog
+                }
+
+                if (Input.GetKeyDown(KeyCode.UpArrow) && ConsoleTextLog.Count > 0)
+                {
+                    if (TextLogPosition != ConsoleTextLog.Count - 1) { TextLogPosition += 1; }
+                    consoleInput.text = ConsoleTextLog[TextLogPosition];
+                    Debug.Log("Position: " + TextLogPosition);
+                    Debug.Log("Up Arrow Pressed");
+                    //cycle to next string in ConsoleTextLog
+                }
+
+                
+            }
+        }
+
+        public void ProcessOnSubmit()
+        {
+            if (inputText.text != "")
+            {
+                AddMessageToConsole(inputText.text);
+                AddTextToConsoleTextLog(inputText.text);
+                ParseInput(inputText.text);
+                consoleInput.text = "";
+                consoleInput.ActivateInputField();
             }
         }
 
@@ -119,8 +167,6 @@ namespace Console
         {
             ConsoleTextLog.Add(txt);
         }
-
-        
 
         //This is the output of a command 
         public static void AddStaticMessageToConsole(string msg)
