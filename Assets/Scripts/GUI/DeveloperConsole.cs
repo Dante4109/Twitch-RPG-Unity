@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,11 +32,10 @@ namespace Console
             public abstract void RunCommand();
         }
 
-        
-
         public static DeveloperConsole Instance { get; private set; }
 
         public static Dictionary<string, ConsoleCommand> Commands { get; private set; }
+
         public int TextLogPosition { get; private set; }
 
         public IList<string> CommandLog = new List<string>();
@@ -78,10 +79,34 @@ namespace Console
 
         private void CreateCommands()
         {
-            CommandQuit commandQuit = CommandQuit.CreateCommand();
-            CommandHelloWorld commandHelloWorld = CommandHelloWorld.CreateCommand();
-            CommandClear commandClear = CommandClear.CreateCommand();
-            CommandPreviousCommands commandPreviousCommands = CommandPreviousCommands.CreateCommand();
+            var filePath = "F:/Programs I made/Game Development Files/Projects/Unity/Twitch-RPG-Unity/Assets/scripts/Console Commands";
+            DirectoryInfo dir = new DirectoryInfo(filePath);
+            FileInfo[] info = dir.GetFiles("*.*");
+
+            foreach(FileInfo f in info)
+            {
+                var fileName = Path.GetFileName(f.ToString());
+                fileName = fileName.Remove(fileName.Length - 3);
+                fileName = ("Console." + fileName);
+                var createCommand = "CreateCommand";
+                //var ClassName = "Console.CommandClear";
+                Type type = Type.GetType(fileName);
+
+                if (type != null)
+                {
+                    MethodInfo method = type.GetMethod(createCommand);
+
+                    if (method != null)
+                    {
+                        method.Invoke(null, null);
+                    }
+                }
+            }
+
+            //CommandQuit commandQuit = CommandQuit.CreateCommand();
+            //CommandHelloWorld commandHelloWorld = CommandHelloWorld.CreateCommand();
+            //CommandClear commandClear = CommandClear.CreateCommand();
+            //CommandPreviousCommands commandPreviousCommands = CommandPreviousCommands.CreateCommand();
         }
 
         public static void AddCommandsToConsole(string _name, ConsoleCommand _command)
