@@ -102,11 +102,6 @@ namespace Console
                     }
                 }
             }
-
-            //CommandQuit commandQuit = CommandQuit.CreateCommand();
-            //CommandHelloWorld commandHelloWorld = CommandHelloWorld.CreateCommand();
-            //CommandClear commandClear = CommandClear.CreateCommand();
-            //CommandPreviousCommands commandPreviousCommands = CommandPreviousCommands.CreateCommand();
         }
 
         public static void AddCommandsToConsole(string _name, ConsoleCommand _command)
