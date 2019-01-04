@@ -22,10 +22,10 @@ GameObject:
   - component: {fileID: 33201914093183328}
   - component: {fileID: 65943467043292286}
   - component: {fileID: 23131626442518364}
-  - component: {fileID: 114548835615966412}
   - component: {fileID: 114072385920022154}
+  - component: {fileID: 114371918043045308}
   m_Layer: 0
-  m_Name: BaseHero
+  m_Name: BaseHeroDumb
   m_TagString: Hero
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -196,25 +196,25 @@ MonoBehaviour:
   m_SceneId:
     m_Value: 0
   m_AssetId:
-    i0: 245
-    i1: 189
-    i2: 252
-    i3: 240
-    i4: 90
-    i5: 177
-    i6: 200
-    i7: 164
-    i8: 200
-    i9: 149
-    i10: 80
-    i11: 160
-    i12: 214
-    i13: 173
-    i14: 179
-    i15: 254
+    i0: 88
+    i1: 230
+    i2: 49
+    i3: 6
+    i4: 103
+    i5: 201
+    i6: 17
+    i7: 196
+    i8: 168
+    i9: 15
+    i10: 236
+    i11: 8
+    i12: 179
+    i13: 216
+    i14: 152
+    i15: 157
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
---- !u!114 &114548835615966412
+--- !u!114 &114371918043045308
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -222,27 +222,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1247680293217354}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fdf22068056849549bd21c542e050554, type: 3}
+  m_Script: {fileID: 11500000, guid: 4459dd9e085d80b41ab880dd30bd9942, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hero:
-    theName: 
-    baseHP: 200
-    curHP: 200
-    baseMP: 10
-    curMP: 10
-    baseATK: 15
-    curATK: 15
-    baseDEF: 3
-    curDEF: 3
-    attacks: []
-    stamina: 10
-    intellect: 10
-    dexterity: 10
-    agility: 10
-    MagicAttacks: []
-  currentState: 0
-  ProgressBar: {fileID: 0}
-  Selector: {fileID: 1848877852257056, guid: e096a26d2da9454419cbe2008a3396ea, type: 2}
-  EnemyToAttack: {fileID: 0}
-  HeroPanel: {fileID: 0}
+  HeroDumb: {fileID: 0}

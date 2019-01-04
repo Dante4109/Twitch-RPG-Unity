@@ -602,7 +602,7 @@ PlayerSettings:
   cloudServicesEnabled:
     UNet: 1
   facebookSdkVersion: 7.9.4
-  apiCompatibilityLevel: 2
+  apiCompatibilityLevel: 3
   cloudProjectId: 359282c6-7752-4d5c-aa26-f8b1f4b88254
   projectName: Twitch RPG (1)
   organizationId: roger-john-morelli-zeller
