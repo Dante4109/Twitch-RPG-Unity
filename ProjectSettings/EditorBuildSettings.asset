@@ -6,5 +6,5 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Twitch Chatbot.unity
-    guid: c4a902b7c84d978418aab220e818073d
+    path: Assets/Scenes/GameManager.unity
+    guid: 303388aa1a9c2bb4a8da31af6cd964af
