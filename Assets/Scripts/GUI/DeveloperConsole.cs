@@ -72,7 +72,7 @@ namespace Console
 
         private void Start()
         {
-            ConsoleCanvas.gameObject.SetActive(false);
+            ConsoleCanvas.gameObject.SetActive(true);
             CreateCommands();
             GetTextLogPosition();
         }

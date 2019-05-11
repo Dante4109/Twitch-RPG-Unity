@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour {
     private RectTransform[] RectTransforms = new RectTransform[2];
 
     public void Awake()
-
     {
         ConsoleWindow.SetActive(false);
         ChatWindow.SetActive(false);
