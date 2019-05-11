@@ -98,7 +98,9 @@ public class EnemyStateMachine : MonoBehaviour {
                         }
                     }
                     //change the color to gray / fade out 
-                    this.gameObject.GetComponent<MeshRenderer>().material.color = new Color32(105, 105, 105, 255);
+                    //this.gameObject.GetComponent<SpriteRenderer>().material.color = new Color32(105, 105, 105, 255);
+                    Destroy(this.gameObject);
+
                     alive = false;
                     //reset enemybutton
                     BSM.EnemyButtons();

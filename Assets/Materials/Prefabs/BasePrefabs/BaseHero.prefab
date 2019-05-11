@@ -64,7 +64,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4166212818225268
 Transform:
   m_ObjectHideFlags: 1
@@ -100,7 +100,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1760066029237970}
   m_LocalRotation: {x: 0.46193978, y: 0.19134173, z: 0.19134173, w: 0.84462327}
-  m_LocalPosition: {x: 0.02, y: 0.49, z: -0.2227}
+  m_LocalPosition: {x: -0.0693, y: 1.1178, z: -0.2227}
   m_LocalScale: {x: 0.08, y: 0.05, z: 0.02}
   m_Children: []
   m_Father: {fileID: 4363669421055204}
@@ -201,6 +201,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Hero: {fileID: 1247680293217354}
   anim: {fileID: 95770119644459992}
+  BattleManager: {fileID: 0}
 --- !u!114 &114548835615966412
 MonoBehaviour:
   m_ObjectHideFlags: 1

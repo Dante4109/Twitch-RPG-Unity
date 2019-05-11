@@ -230,7 +230,7 @@ public class HeroStateMachine : MonoBehaviour
 
             }
             //change color / play animation
-            this.gameObject.GetComponent<MeshRenderer>().material.color = new Color32(105, 105, 105, 255);
+            this.gameObject.GetComponent<SpriteRenderer>().material.color = new Color32(105, 105, 105, 255);
             //reset heroinput
             BSM.battlestates = BattleStateMachine.PerformAction.CheckAlive;
             alive = false;
